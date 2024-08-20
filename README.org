@@ -34,6 +34,7 @@ Welcome Team members! We have been tasked with creating a database, There are a 
 |                |           |
 |                |           |
 |----------------+-----------|
+|                |           |
 |----------------+-----------|
 
 ** Repository Rules
@@ -68,7 +69,6 @@ Someone other than the pusher must review the code.
   git commit -S -m "Place the commit message here."
 #+end_src
 This command makes sure that the commit is signed with your key when you push it to the repo.
-
 
 *** Block Force Pushing
 This one is straight forward keeps people from accidentally pushing and overwriting an important branch such as the main branch.
