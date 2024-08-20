@@ -17,7 +17,7 @@ Welcome Team members! We have been tasked with creating a database, There are a 
 2. Have an [[https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys][SSH]] or [[https://docs.github.com/en/authentication/managing-commit-signature-verification/checking-for-existing-gpg-keys][GPG]] key setup
    * *Set this up for both authorization and [[https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification][signing]].*
 3. Pull the Repo.
-4. Create a [[#Creating A Branch][Branch]] with your name.
+4. Create a [[#Creating-A-Branch][Branch]] with your name.
    - Check out this branch before you start working.
 5. Add your name and ID to the README.
    - The README is an [[https://orgmode.org/][org document]].
@@ -27,7 +27,7 @@ Welcome Team members! We have been tasked with creating a database, There are a 
    - Make sure to sign your commits
 7. Push your branch to the repo.
 8. Go to Github and create a pull request.
-9. Check out the [[#Repository Rules][Repository]] section of the README
+9. Check out the [[#Repository-Rules][Repository]] section of the README
 10. Check out the discussion board.
 11. Have Fun!
 
