@@ -7,9 +7,6 @@
 #+OPTIONS: todo:nil
 #+OPTIONS: H:6
 #+OPTIONS: num:0
-#+LATEX_HEADER: \usepackage[margin=.75in]{geometry}
-#+LATEX_HEADER_EXTRA: \usepackage{tikz}
-#+LATEX_HEADER_EXTRA: \usepackage{graphicx}
 :END:
 * Getting Started
 Welcome Team members! We have been tasked with creating a database, There are a few things to make sure of before we embark upon this journey.
