@@ -1,0 +1,29 @@
+#+TITLE: Database Project spring 2024
+#+AUTHOR: That One Team
+:PROPERTIES:
+#+LATEX_CLASS: article
+#+STARTUP: overview
+#+OPTIONS: toc:nil
+#+OPTIONS: todo:nil
+#+OPTIONS: H:6
+#+OPTIONS: num:0
+#+LATEX_HEADER: \usepackage[margin=.75in]{geometry}
+#+LATEX_HEADER_EXTRA: \usepackage{tikz}
+#+LATEX_HEADER_EXTRA: \usepackage{graphicx}
+:END:
+
+* Team Members
+#+attr_latex: :align |c|c|
+|----------------+-----------|
+| Name           | ID        |
+|----------------+-----------|
+| Jachin Minyard | jsm220000 |
+|                |           |
+|                |           |
+|                |           |
+|----------------+-----------|
+
+* Ideas
+
+* Software Requirements
+
