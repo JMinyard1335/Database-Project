@@ -26,14 +26,11 @@ Welcome Team members! We have been tasked with creating a database, There are a 
 ** Team Members
 #+attr_html: :align center :border 2 :frame border
 |----------------+-----------|
-|----------------+-----------|
 | Name           | ID        |
 |----------------+-----------|
 | Jachin Minyard | jsm220000 |
 |                |           |
 |                |           |
-|                |           |
-|----------------+-----------|
 |                |           |
 |----------------+-----------|
 
