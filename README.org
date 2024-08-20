@@ -97,3 +97,4 @@ In order to be able to push the branch it need to be added to the remote repo. T
   git push -u origin <Branch Name>
 #+end_src
 *** Creating the Pull Request
+Once all the above steps have been taken you are ready to create a pull request. Go to Githubs website and navigate to the repo. There should be a button that says 'Create Pull Request' click that and follow the instructions. Please give as specific of details when creating the pull request as possible. This will help the team understand what you are trying to do and help them to review the code. Then message a fellow member and let them know that you have created a pull request so that they can review it.
