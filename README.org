@@ -34,7 +34,7 @@ Welcome Team members! We have been tasked with creating a database, There are a 
 | Name           | ID        |
 |----------------+-----------|
 | Jachin Minyard | jsm220000 |
-|                |           |
+| Hani Kamran    | HXK210070 |
 |                |           |
 |                |           |
 |----------------+-----------|
