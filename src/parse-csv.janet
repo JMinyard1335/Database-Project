@@ -1,8 +1,10 @@
+# This file is meant to be used as a way to load all the data into a database through the csv files.
+# the data is loaded into structs which can be found in the structs/ directory.
 (use ./structs/pokemon)
 (use ./structs/gym)
+
 # parse through a csv file of pokemon data
 # retuens a list of pokemon structs.
-
 (defn parse-pokemon [path]
   (let [f (file/open path)
 	pokelist @[]]
@@ -22,7 +24,8 @@
     (file/close f)
     pokelist))   
 
-
+# parse through a csv file of gym data
+# retuens a list of gym structs.
 (defn parse-gyms [path]
     (let [f (file/open path)
 	  gymlist @[]]

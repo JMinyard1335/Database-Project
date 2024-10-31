@@ -1,21 +1,30 @@
-CREATE TABLE
+CREATE TABLE if not exists
     Pokemon (
         PokeID INT,
         PokeNum INT,
-        Descr VARCHAR(100),
-        RegionID INT,
+	RegionID INT,
+        Pname VARCHAR(100),
+	Image VARCHAR(250),
         Primary Key (PokeID),
         Foreign Key (RegionID) References Region
     );
 
-CREATE TABLE
+CREATE TABLE if not exists
     Typ (
         TypeID INT,
         TypeName VARCHAR(100),
         Primary Key (TypeID)
     );
 
-CREATE TABLE
+
+CREATE TABLE if not exists
+    Region (
+        RegionID INT,
+        RegionName VARCHAR(100),
+        Primary Key (RegionID)
+    );
+
+CREATE TABLE if not exists
     PokemonType (
         PokeID INT,
         TypeID INT NOT NULL,
@@ -23,14 +32,7 @@ CREATE TABLE
         Foreign Key (TypeID) References Typ
     );
 
-CREATE TABLE
-    Region (
-        RegionID INT,
-        RegionName VARCHAR(100),
-        Primary Key (RegionID)
-    );
-
-CREATE TABLE
+CREATE TABLE if not exists
     Gyms (
         GymID INT,
         RegionID INT NOT NULL,
@@ -39,7 +41,7 @@ CREATE TABLE
         Foreign Key (RegionID) References Region
     );
 
-CREATE TABLE
+CREATE TABLE if not exists
     Trainer (
         TrainerID INT,
         TrainerName VARCHAR(100),
@@ -48,7 +50,7 @@ CREATE TABLE
         Foreign Key (GymID) References Gyms
     );
 
-CREATE TABLE
+CREATE TABLE if not exists
     TrainBy (
         TrainerID INT NOT NULL,
         PokeID INT NOT NULL,

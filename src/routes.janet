@@ -8,13 +8,12 @@
 (use ./testdata)
 (use ./parse-csv)
 
+(var pokelist(parse-pokemon "./csvdata/gen1_pokemon.csv"))
 # This is the decorator style for defining routes
 # call route define which method (get, post, etc)
 # define the path of the route
 # and the function that will handle the request
 # Below the route define the function you put in the route call
-(var pokelist (array/concat (parse-pokemon "./csvdata/gen1_pokemon.csv") (parse-pokemon "./csvdata/gen2_pokemon.csv")))
-
 (route :get "/" :home)
 (defn home [request]
   # The mainpage is a function that defines the html

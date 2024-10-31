@@ -1,11 +1,4 @@
 # This file will define the form used to search the database
-
-# (def- sform-container :div.flex.bg-red-500.justify-center.mt-36)
-# (def- sform :form.flex.justify-center.w-1/3.bg-blue-500)
-# (def- sform-input-container :div.flex.bg-pink-500.w-full)
-# (def- sform-input :input.flex-grow)
-# (def- sform-button :button.bg-yellow-500)
-
 (def- sform-container :div.flex.justify-center.items-center.w-full.mt-48.mb-4)
 (def- sform :form.flex.justify-center.w-full.max-w-lg.p-4.rounded-lg)
 (def- sform-input-container :div.flex.items-center.w-full)

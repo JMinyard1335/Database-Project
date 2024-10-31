@@ -12,7 +12,9 @@
    # here the key act as the def in defn so we can simply give it a function
    :list-types
    (fn [self]
-     (foreach [t (self :typ)] [:li {:class ""} t]))
+     (var rv "")
+     (foreach [t (self :typ)]
+	      (set rv (string/join @[rv t] " ")))[:li {:class ""} rv])
    })
 
 (defn create-pokemon [number name region typs image]

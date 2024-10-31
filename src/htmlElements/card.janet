@@ -38,7 +38,8 @@
 	  [card-image {:src (get struct :image) :alt ""}]
 	  [card-body
 	   [card-title (get struct :name)]
-	   [card-type  (:list-types struct)]
+	   [:h3 {:class ""} "Types: "]
+	   [card-type {:class "ml-4"}(:list-types struct)]
 	   [card-region (string/format "Region: %s" (get struct :region))]
 	   [card-description (get struct :description)]]]))
   
