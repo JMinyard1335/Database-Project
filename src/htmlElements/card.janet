@@ -32,6 +32,7 @@
     (set g-flag-set (string/check-set flags :g))
     (set p-flag-set (string/check-set flags :p)))
 
+  # To change the layout of the pokemon display modify the following block
   (if p-flag-set
     (set res
 	 [card-link {:href "#"}
@@ -42,7 +43,8 @@
 	   [card-type {:class "ml-4"}(:list-types struct)]
 	   [card-region (string/format "Region: %s" (get struct :region))]
 	   [card-description (get struct :description)]]]))
-  
+
+  # To change the layout of the gym display modify the following block
   (if g-flag-set
     (set res
 	 [card-link {:href "#"}

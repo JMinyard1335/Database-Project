@@ -22,6 +22,8 @@
 # This is the entry point of the application.
 # This is a simple server setup. but will work for the demo
 (defn main [& args]
+  (print "Starting server...")
   (db/connect (env :database-url))
+  (print (string/format "Server started at http://localhost:%s" (env :port)))
   (server app (env :port))
   (db/disconnect))
