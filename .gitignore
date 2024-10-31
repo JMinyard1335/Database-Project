@@ -238,7 +238,5 @@ flycheck_*.el
 *.tex
 *.log
 
-
-
 node_modules/
-db/
+db/*.sqlite3

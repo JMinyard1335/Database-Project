@@ -13,7 +13,14 @@
 :END:
 
 * Overview
-This is the PokeSearch site created as apart of the UTD 2024 database curriculum. This project is currently implemented in the [[https://janet-lang.org/][Janet Language]], and the [[https://joy.swlkr.com/][Joy framework]]. The goal of this project is to implement the database and sql side of things everything else is just extra. 
+This is the PokeSearch site created as apart of the UTD 2024 database curriculum. This project is currently implemented in the [[https://janet-lang.org/][Janet Language]], and the [[https://joy.swlkr.com/][Joy framework]]. The goal of this project is to implement the database and sql side of things everything else is just extra.
+* Downloading Janet
+Check out the links and follow the docs. If you have any questions ask me anytime.
+- [[https://janet-lang.org/][Main site]]
+- [[https://janet-lang.org/docs/index.html][Download Instructions]]
+- [[https://github.com/janet-lang/janet/releases][Download Links]]
+  Once the language is installed the package manager ([[https://janet-lang.org/docs/jpm.html][jpm]]) for it is self bootstrapping. Just make sure to look at the page that has the instructions of how to use it.
+  I will say windows and mac the instructions seem to be fairly straight forward on the instruction page. Mac has homebrew and Windows can use vs-code. I would like to note for Windows users there seems to be an installer in the 'Download Links'. I have not tried this so I do not know if it works (I uninstalled windows). Linux set up was not terrible, I would recommend doing a system wide install and ignore the 'local install' section of the docs where it talks about changing path. Do note that a system install will require root for both the install and the installations from jpm.
 * Project Layout
 The project is broken into several directories these being
 ** db
@@ -53,5 +60,7 @@ This would be things like the layout of the mainpage which may be a combination 
          [:li {:class "flex w-full justify-center"} (card p :p)])]]]
     ])
   #+END_SRC
-  You can make functions, stucts, call map to map different elements together, use recursion, what every you want to do inside of the html you have the full power of the language at your disposal. 
+  You can make functions, stucts, call map to map different elements together, use recursion, what every you want to do inside of the html you have the full power of the language at your disposal.
   
+** csvdata
+This directory will just hold any data we want to populate the db with.
