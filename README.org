@@ -1,0 +1,25 @@
+* Setup
+** Python
+Make sure python3 is installed on the system.
+** virtual environment
+You need to create a venv to hold the required packages
+#+begin_src sh
+  python3 -m venv .venv
+#+end_src
+Then activate the venv with:
+#+begin_src sh
+  # for Linux
+  . .venv/bin/activate
+  # for Windows
+  .venv/Scripts/activate
+#+end_src
+
+Once you have created a venv use the following command to install the required packages from the requirements.txt.
+ #+begin_src sh
+  pip3 install -r requirements.txt
+#+end_src
+This should install the required libraries in to your virtual environment
+** Initialize database
+If everything has worked up untill now 
+** Load data 
+** Launch App
