@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Pokémon</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        img {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Pokémon</h1>
+    <a href="{{ url_for('pokemon.new_pokemon') }}">Add New Pokémon</a>
+    <table>
+        <thead>
+            <tr>
+                <th>PokeNum</th>
+                <th>Pname</th>
+                <th>RegionID</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pokemon in pokemon_list %}
+            <tr>
+                <td>{{ pokemon['PokeNum'] }}</td>
+                <td>{{ pokemon['Pname'] }}</td>
+                <td>{{ pokemon['RegionID'] }}</td>
+                <td><img src="{{ url_for('static', filename=pokemon['Image']) }}" alt="{{ pokemon['Pname'] }}"></td>
+                <td>
+                    <form action="{{ url_for('pokemon.delete_pokemon', id=pokemon['PokeID']) }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="id" value="{{ pokemon['PokeID'] }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

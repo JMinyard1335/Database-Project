@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Pokémon</title>
+</head>
+<body>
+    <h1>Pokémon Details</h1>
+    
+    <strong>id</strong>
+    <div>{{ pokemon['PokeID'] }}</div>
+
+    <strong>name</strong>
+    <div>{{ pokemon['Pname'] }}</div>
+
+    <strong>region id</strong>
+    <div>{{ pokemon['RegionID'] }}</div>
+
+    <a href="{{ url_for('pokemon.index') }}">All Pokémon</a>
+</body>
+</html>

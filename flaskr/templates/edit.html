@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Pokémon</title>
+</head>
+<body>
+    <h1>Edit Pokémon</h1>
+
+    <form action="{{ url_for('pokemon.patch', id=pokemon['PokeID']) }}" method="post">
+        <div>
+            <label for="poke_num">Pokémon Number</label>
+            <input type="text" id="poke_num" name="poke_num" value="{{ pokemon['PokeNum'] }}">
+        </div>
+
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="{{ pokemon['Pname'] }}">
+        </div>
+
+        <div>
+            <label for="region_id">Region ID</label>
+            <input type="text" id="region_id" name="region_id" value="{{ pokemon['RegionID'] }}">
+        </div>
+
+        <div>
+            <label for="image">Image URL (optional)</label>
+            <input type="text" id="image" name="image" value="{{ pokemon['Image'] }}">
+        </div>
+
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>

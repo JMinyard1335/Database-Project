@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Pokémon</title>
+</head>
+<body>
+    <h1>Create New Pokémon</h1>
+
+    <form action="{{ url_for('pokemon.create_pokemon') }}" method="post">
+      <div>
+        <label for="poke_id">Pokémon ID</label>
+        <input type="text" id="poke_id" name="poke_id">
+      </div>
+      
+      <div>
+        <label for="poke_num">Pokémon Number</label>
+        <input type="text" id="poke_num" name="poke_num">
+      </div>
+      
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name">
+        </div>
+
+        <div>
+            <label for="region_id">Region ID</label>
+            <input type="text" id="region_id" name="region_id">
+        </div>
+
+        <div>
+            <label for="image">Image URL (optional)</label>
+            <input type="text" id="image" name="image">
+        </div>
+
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>
