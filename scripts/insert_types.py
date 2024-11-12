@@ -22,4 +22,4 @@ def insert_types_from_csv(csv_file_path):
     conn.close()
 
 if __name__ == '__main__':
-    insert_types_from_csv('..csvdata/types.csv')
+    insert_types_from_csv('csvdata/types.csv')
