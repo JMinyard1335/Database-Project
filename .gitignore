@@ -240,3 +240,8 @@ flycheck_*.el
 
 node_modules/
 db/*.sqlite3
+
+FlaskApp/venv
+FlaskApp/.venv
+FlaskApp/__pypackages__/
+JanetApp/db/*.sqlite3

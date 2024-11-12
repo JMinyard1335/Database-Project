@@ -1,0 +1,66 @@
+#+TITLE: Database Pokesearch
+#+AUTHOR: Jachin Minyard
+:PROPERTIES:
+#+LATEX_CLASS: article
+#+STARTUP: overview
+#+OPTIONS: toc:nil
+#+OPTIONS: todo:nil
+#+OPTIONS: H:6
+#+OPTIONS: num:1
+#+LATEX_HEADER: \usepackage[margin=.75in]{geometry}
+#+LATEX_HEADER_EXTRA: \usepackage{tikz}
+#+LATEX_HEADER_EXTRA: \usepackage{graphicx}
+:END:
+
+* Overview
+This is the PokeSearch site created as apart of the UTD 2024 database curriculum. This project is currently implemented in the [[https://janet-lang.org/][Janet Language]], and the [[https://joy.swlkr.com/][Joy framework]]. The goal of this project is to implement the database and sql side of things everything else is just extra.
+* Downloading Janet
+Check out the links and follow the docs. If you have any questions ask me anytime.
+- [[https://janet-lang.org/][Main site]]
+- [[https://janet-lang.org/docs/index.html][Download Instructions]]
+- [[https://github.com/janet-lang/janet/releases][Download Links]]
+  Once the language is installed the package manager ([[https://janet-lang.org/docs/jpm.html][jpm]]) for it is self bootstrapping. Just make sure to look at the page that has the instructions of how to use it.
+  I will say windows and mac the instructions seem to be fairly straight forward on the instruction page. Mac has homebrew and Windows can use vs-code. I would like to note for Windows users there seems to be an installer in the 'Download Links'. I have not tried this so I do not know if it works (I uninstalled windows). Linux set up was not terrible, I would recommend doing a system wide install and ignore the 'local install' section of the docs where it talks about changing path. Do note that a system install will require root for both the install and the installations from jpm.
+* Project Layout
+The project is broken into several directories these being
+** db
+Holds the database and sql files
+** public
+Holds the public data served on the site
+*** images
+These I just felt like adding for some color I dont know if we should include them in the db. And if we do I think the database should just hold the link to the image.
+*** css
+This project is using the tailwindcss and flowbite node packages. Tailwind is for style flowbite is for functionality. While the functionality is nice we could lose flowbite and use the Tailwind script instead of relying on node.
+**  src
+Hold all the logic and "HTML" templates.
+*** htmlElements
+This directory hold what I call HTML components. they are reusable combinations of different html elements. This includes things like navbars, forms, and cards.
+*** struct
+This directory hold any struct/classes we need. In Janet a struct and a class are basically the same thing. In lisp every thing is a function even the keys in a (key value) pair. To be more precise the key in a key value pair is the [[https://janet-lang.org/docs/bindings.html][(def)]] function. This is not the python def, the Janet def is used to define variables.  So one of the weird things we can do is in a struct in janet which is just a {:key1 value1
+:key2 value2....} we can use this to our advantage. the (defn) function is really the short hand (def (fn [])). This means that something like:
+#+BEGIN_SRC janet
+ :getname (fn [self] (pp (self :name)))
+#+END_SRC
+Will act as a getter for a struct.
+*** templates
+The Templates dir hold the html templates for the sites. These are different to the elements as these are set layout used as site pages.
+This would be things like the layout of the mainpage which may be a combination of html elements and other tags. In Janet with the joy frame work we have a unique way of using html. The author put it as its html "in Janet not Janet in html" as such an example of html in janet is as follows
+#+BEGIN_SRC janet
+  (use joy)
+
+  (defn mainpage [pokecard-list]
+    [:div {:class ""}
+     [:div navbar]
+     [:div search-form]
+     [:div {:class "flex justify-center mt-4 mx-10"}
+      [:div {:class "p-8 mt-4 w-1/2 bg-red-500 sm:w-3/4 md:w-1/2 lg:w-1/3 flex justify-center rounded-lg"}
+       [:ul {:class "list-none justify-center w-full"}
+        (foreach
+         [p pokecard-list]
+         [:li {:class "flex w-full justify-center"} (card p :p)])]]]
+    ])
+  #+END_SRC
+  You can make functions, stucts, call map to map different elements together, use recursion, what every you want to do inside of the html you have the full power of the language at your disposal.
+  
+** csvdata
+This directory will just hold any data we want to populate the db with.
