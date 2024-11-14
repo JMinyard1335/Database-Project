@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Pokémon</title>
+</head>
+<body>
+    <h1>Search Pokémon</h1>
+
+    <form action="{{ url_for('pokemon.search_pokemon') }}" method="post">
+      <div>
+        <label for="poke_id">Pokémon ID</label>
+        <input type="text" id="poke_id" name="poke_id" required>
+      </div>
+
+      <div>
+        <input type="submit" value="Search">
+      </div>
+    </form>
+
+    {% if pokemon %}
+    <h2>Search Result</h2>
+    <p>Pokémon ID: {{ pokemon['PokeID'] }}</p>
+    <p>Pokémon Name: {{ pokemon['Pname'] }}</p>
+    <p>Pokémon Number: {{ pokemon['PokeNum'] }}</p>
+    <p>Region ID: {{ pokemon['RegionID'] }}</p>
+    <p>Image URL: {{ pokemon['Image'] }}</p>
+    {% endif %}
+    
+    {% if error %}
+    <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app, render_template, redirect, url_for
 import sqlite3
+import os
 
 pokemon_bp = Blueprint('pokemon', __name__, url_prefix='')
 
@@ -14,7 +15,8 @@ def db_connection():
 def get_all_pokemon():
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Pokemon")
+    query = "SELECT * FROM Pokemon"
+    cursor.execute(query)
     rows = cursor.fetchall()
     pokemon_list = [dict(row) for row in rows]
     print(pokemon_list)
@@ -26,7 +28,8 @@ def get_all_pokemon():
 def get_pokemon(id):
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Pokemon WHERE PokeID = ?", (id,))
+    query = f"SELECT * FROM Pokemon WHERE PokeID = {id}"
+    cursor.execute(query)
     row = cursor.fetchone()
     conn.close()
     if row:
@@ -53,8 +56,12 @@ def create_pokemon():
 
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO Pokemon (PokeID, PokeNum, Pname, RegionID, Image) VALUES (?, ?, ?, ?, ?)",
-                   (poke_id, poke_num, name, region_id, image))
+
+    query = f"""
+    INSERT INTO Pokemon (PokeID, PokeNum, Pname, RegionID, Image)
+    VALUES ({poke_id}, {poke_num}, "{name}", {region_id}, "{image}")
+    """
+    cursor.execute(query)
     conn.commit()
     conn.close()
     return redirect(url_for('pokemon.get_all_pokemon'))
@@ -64,9 +71,92 @@ def create_pokemon():
 def delete_pokemon(id):
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM Pokemon WHERE PokeID = ?", (id,))
+    query = f"DELETE FROM Pokemon WHERE PokeID = {id}"
+    cursor.execute(query)
     conn.commit()
     conn.close()
     return redirect(url_for('pokemon.get_all_pokemon'))
 
 
+@pokemon_bp.route('/assignment5', methods=['GET', 'POST'])
+def assignment5():
+    if request.method == 'POST':
+        if 'search_submit' in request.form:
+            return search_pokemon()
+        elif 'update_submit' in request.form:
+            return update_pokemon()
+        elif 'search_safe_submit' in request.form:
+            return search_pokemon_safe()
+    
+    return render_template('assignment5.html')
+
+# Part A: SQL Injection (SELECT)
+def search_pokemon():
+    pokemon = None
+    error = None
+
+    poke_id = request.form.get('poke_id')
+    
+    if not poke_id:
+        return render_template('assignment5.html', error="Pokémon ID is required")
+    
+    # Vulnerable SQL search query
+    query = f"SELECT * FROM Pokemon WHERE PokeID = {poke_id}"
+    unsafe_query = f"sqlite3 {current_app.config['DATABASE']} \"{query}\""
+    
+    # Execute the raw query in the shell
+    result = os.popen(unsafe_query).read()
+
+    if not result:
+        error = "No Pokémon found with that ID"
+    else:
+        pokemon = result
+
+    return render_template('assignment5.html', pokemon=pokemon, error=error)
+
+# Part B: SQL Injection (UPDATE)
+def update_pokemon():
+    poke_id = request.form.get('poke_id')
+    poke_name = request.form.get('poke_name')
+    success_message = None
+    error = None
+
+    if not poke_id or not poke_name:
+        return render_template('assignment5.html', error="Both Pokemon ID and Name are required")
+
+    # Vulnerable UPDATE query
+    query = f"UPDATE Pokemon SET Pname = '{poke_name}' WHERE PokeID = {poke_id}"
+    unsafe_query = f"sqlite3 {current_app.config['DATABASE']} \"{query}\""
+    
+    # Execute the raw query in the shell
+    result = os.popen(unsafe_query).read()
+
+    if not result:
+        error = "Failed to update Pokémon"
+    else:
+        success_message = f"Pokemon {poke_id} updated successfully."
+
+    return render_template('assignment5.html', success_message=success_message, error=error)
+
+# Part C: Prepared Statements to Prevent SQL Injection
+def search_pokemon_safe():
+    pokemon = None
+    error = None
+
+    poke_id = request.form.get('poke_id')
+    
+    if not poke_id:
+        return render_template('assignment5.html', error="Pokémon ID is required")
+    
+    # Use prepared statements to prevent SQL injection
+    conn = db_connection()
+    query = "SELECT * FROM Pokemon WHERE PokeID = ?"
+    cursor = conn.execute(query, (poke_id,))
+    result = cursor.fetchall()
+
+    if not result:
+        error = "No Pokémon found with that ID"
+    else:
+        pokemon = result
+
+    return render_template('assignment5.html', pokemon=pokemon, error=error)

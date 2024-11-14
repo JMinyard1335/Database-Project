@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 5 - SQL Injection</title>
+</head>
+<body>
+    <h1>Assignment 5: SQL Injection</h1>
+
+    <!-- Part A: SQL Injection - SELECT -->
+    <h2>Part A: SQL Injection (SELECT)</h2>
+    <form action="/assignment5" method="POST">
+        <label for="poke_id">Pokemon ID:</label>
+        <input type="text" id="poke_id" name="poke_id" required>
+        <button type="submit" name="search_submit">Search</button>
+    </form>
+
+    <h3>Injectable Input Example:</h3>
+    <p>Try entering <code>1 OR 1=1</code> to retrieve all records.</p>
+
+    {% if pokemon %}
+        <h3>Search Results:</h3>
+        <pre>{{ pokemon }}</pre>
+    {% endif %}
+
+    {% if error %}
+        <h3>Error:</h3>
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <!-- Part B: SQL Injection - UPDATE -->
+    <h2>Part B: SQL Injection (UPDATE)</h2>
+    <form action="/assignment5" method="POST">
+        <label for="poke_id">Pokemon ID:</label>
+        <input type="text" id="poke_id" name="poke_id" required>
+        <label for="poke_name">New Pokemon Name:</label>
+        <input type="text" id="poke_name" name="poke_name" required>
+        <button type="submit" name="update_submit">Update</button>
+    </form>
+
+    <h3>Injectable Input Example:</h3>
+    <p>Try entering <code>1 OR 1=1</code> for <strong>PokeID</strong> to update all records.</p>
+
+    {% if success_message %}
+        <h3>Success:</h3>
+        <p>{{ success_message }}</p>
+    {% endif %}
+
+    {% if error %}
+        <h3>Error:</h3>
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <!-- Part C: Prevent SQL Injection -->
+    <h2>Part C: Prevent SQL Injection (Prepared Statements)</h2>
+    <form action="/assignment5" method="POST">
+        <label for="poke_id">Pokemon ID:</label>
+        <input type="text" id="poke_id" name="poke_id" required>
+        <button type="submit" name="search_safe_submit">Search (Safe)</button>
+    </form>
+
+    <h3>This query is protected from SQL injection using prepared statements.</h3>
+    <p>Try using the same injection input from Part A.</p>
+
+    {% if pokemon %}
+        <h3>Search Results (Safe):</h3>
+        <pre>{{ pokemon }}</pre>
+    {% endif %}
+
+    {% if error %}
+        <h3>Error:</h3>
+        <p>{{ error }}</p>
+    {% endif %}
+
+</body>
+</html>
+
