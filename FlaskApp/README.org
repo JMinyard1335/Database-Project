@@ -30,10 +30,10 @@ You should see the following message
 #+end_example
 
 ** Load data
-Even tho the database exists it is empty to populate it with the data run the load_data.py script found in the scripts/
-The command is:
+Even tho the database exists it is empty to populate it with the data run the load_data.py script found in the flaskr folder
+The command is:  *Make sure u are in the Flask App not the Janet App*
 #+begin_src sh
-  python3 scripts/load_data.py
+ python3 flaskr/load_data.py 
 #+end_src
 
 ** Launch App
