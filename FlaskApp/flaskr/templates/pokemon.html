@@ -38,15 +38,16 @@
             <tr>
                 <td>{{ pokemon['PokeNum'] }}</td>
                 <td>{{ pokemon['Pname'] }}</td>
-                <td>{{ pokemon['RegionID'] }}</td>
+                <td>{{ pokemon['RegionName'] }}</td>
                 <td><img src="{{ url_for('static', filename=pokemon['Image']) }}" alt="{{ pokemon['Pname'] }}"></td>
-                <td>
-                    <form action="{{ url_for('pokemon.delete_pokemon', id=pokemon['PokeID']) }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="{{ pokemon['PokeID'] }}">
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
+		<td>
+		  <form action="{{ url_for('pokemon.delete_pokemon', id=pokemon['PokeID']) }}" method="POST" style="display:inline;">
+		    <input type="hidden" name="id" value="{{ pokemon['PokeID'] }}">
+		    <button type="submit">Delete</button>
+		  </form>
+		  <a href="{{ url_for('pokemon.edit_pokemon', id=pokemon['PokeID']) }}">Edit</a>
+		</td>
+	    </tr>
             {% endfor %}
         </tbody>
     </table>

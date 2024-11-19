@@ -15,14 +15,17 @@ def db_connection():
 def get_all_pokemon():
     conn = db_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM Pokemon"
+    query = """
+    SELECT Pokemon.PokeID, Pokemon.PokeNum, Pokemon.Pname, Region.RegionName, Pokemon.Image
+    FROM Pokemon
+    JOIN Region ON Pokemon.RegionID = Region.RegionID
+    """
     cursor.execute(query)
     rows = cursor.fetchall()
     pokemon_list = [dict(row) for row in rows]
     print(pokemon_list)
     conn.close()
     return render_template('pokemon.html', pokemon_list=pokemon_list)
-
 
 @pokemon_bp.route('/<int:id>', methods=['GET'])
 def get_pokemon(id):
@@ -114,8 +117,44 @@ def search_pokemon():
 
     return render_template('assignment5.html', pokemon=pokemon, error=error)
 
+@pokemon_bp.route('/<int:id>/edit', methods=['GET'])
+def edit_pokemon(id):
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM Pokemon WHERE PokeID = ?"
+    cursor.execute(query, (id,))
+    pokemon = cursor.fetchone()
+    conn.close()
+    if pokemon:
+        return render_template('edit.html', pokemon=dict(pokemon))
+    else:
+        return jsonify({'error': 'Pokemon not found'}), 404
+
+@pokemon_bp.route('/<int:id>/update', methods=['POST'])
+def update_pokemon(id):
+    poke_num = request.form.get('poke_num')
+    name = request.form.get('name')
+    region_id = request.form.get('region_id')
+    image = request.form.get('image')
+
+    if not all([poke_num, name, region_id]):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = """
+    UPDATE Pokemon
+    SET PokeNum = ?, Pname = ?, RegionID = ?, Image = ?
+    WHERE PokeID = ?
+    """
+    cursor.execute(query, (poke_num, name, region_id, image, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('pokemon.get_all_pokemon'))
+
+
 # Part B: SQL Injection (UPDATE)
-def update_pokemon():
+def update_pokemon_unsafe():
     poke_id = request.form.get('poke_id')
     poke_name = request.form.get('poke_name')
     success_message = None
