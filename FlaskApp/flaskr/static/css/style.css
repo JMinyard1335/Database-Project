@@ -1,0 +1,205 @@
+.bg-red {
+    background-color: #9C0202;
+}
+.pokemon-row:nth-child(even) {
+    background-color: #9C0202;
+    color: white;
+}
+.color-white {
+	color: white;
+}
+.color-black {
+	color: black;
+}
+.color-red {
+	color: #9C0202;
+}
+
+/*
+  Display types
+*/
+.flex {
+    display: flex;
+}
+.grid {
+    display: grid;
+}
+.block {
+    display: block;
+}
+.inline-block {
+    display: inline-block;
+}
+.inline {
+    display: inline;
+}
+
+/*
+  Margin classes to change the margins of an element
+*/
+.m-4 {
+    margin: 2rem;
+}
+
+.mx-1 {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+.mx-2 {
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+.mx-3 {
+    margin-right: 1.5rem;
+    margin-left: 1.5rem;
+}
+.mx-4 {
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+.my-1 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.my-2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.my-3 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.my-4 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/*
+  Padding classes to change the padding of an element
+*/
+.px-1 {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+.px-2 {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+.px-3 {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+}
+.px-4 {
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+.py-1 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.py-2 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.py-3 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+.py-4 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/*
+  align-items classes
+*/
+.items-start {
+    align-items: flex-start;
+}
+.items-center {
+    align-items: center;
+}
+.items-end {
+    align-items: flex-end;
+}
+.items-stretch {
+    align-items: stretch;
+}
+
+/*
+  justify-content classes
+*/
+.justify-start {
+    justify-content: flex-start;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-end {
+    justify-content: flex-end;
+}
+.justify-space-between {
+    justify-content: space-between;
+}
+.justify-space-around {
+    justify-content: space-around;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+img {
+    width: 50px;
+}
+
+.w-full {
+    width: 100%;
+}
+.w-half {
+    width: 50%;
+}
+.w-third {
+    width: 33.333333%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem; /* Adjust space between rows */
+}
+
+.form-row label {
+    flex: 1;
+    margin-right: 1rem; /* Space between label and input */
+    font-weight: bold; /* Optional: Makes labels bold */
+}
+
+.form-row input {
+    flex: 2;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Ensure full width for input fields */
+}
+
+.form-container {
+    background-color: #9C0202;
+    width: 50%;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

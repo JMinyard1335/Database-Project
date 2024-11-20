@@ -1,25 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Pokémon</title>
-</head>
-<body>
-    <h1>Edit Pokémon</h1>
-    <form action="{{ url_for('pokemon.update_pokemon', id=pokemon['PokeID']) }}" method="POST">
-        <label for="poke_num">Pokémon Number:</label>
-        <input type="text" id="poke_num" name="poke_num" value="{{ pokemon['PokeNum'] }}" required><br>
+{% extends "base.html" %}
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ pokemon['Pname'] }}" required><br>
+{% block title %}Edit Pokémon{% endblock %}
 
-        <label for="region_id">Region ID:</label>
-        <input type="text" id="region_id" name="region_id" value="{{ pokemon['RegionID'] }}" required><br>
+{% block content %}
+<h1 class="w-full text-center">Edit Pokémon</h1>
+<div class="flex w-full justify-center items-center">
+  <form class="form-container color-white" action="{{ url_for('pokemon.update_pokemon', id=pokemon['PokeID']) }}" method="POST">
 
-        <label for="image">Image URL:</label>
-        <input type="text" id="image" name="image" value="{{ pokemon['Image'] }}"><br>
+    <div class="form-row">
+      <label for="poke_num">Pokémon Number:</label>
+      <input type="text" id="poke_num" name="poke_num" value="{{ pokemon['PokeNum'] }}" required><br>
+    </div>
 
-        <button type="submit">Update</button>
-    </form>
-</body>
-</html>
+    <div class="form-row">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="{{ pokemon['Pname'] }}" required><br>
+    </div>
+
+    <div class="form-row">
+      <label for="region_id">Region ID:</label>
+      <input type="text" id="region_id" name="region_id" value="{{ pokemon['RegionID'] }}" required><br>
+    </div>
+
+    <div class="form-row">
+      <label for="image">Image URL:</label>
+      <input type="text" id="image" name="image" value="{{ pokemon['Image'] }}"><br>
+    </div>
+    <button type="submit">Update</button>
+  </form>
+</div>
+
+{% endblock %}  

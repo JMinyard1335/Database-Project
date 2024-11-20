@@ -25,7 +25,7 @@ def get_all_pokemon():
     pokemon_list = [dict(row) for row in rows]
     print(pokemon_list)
     conn.close()
-    return render_template('pokemon.html', pokemon_list=pokemon_list)
+    return render_template('index.html', pokemon_list=pokemon_list)
 
 @pokemon_bp.route('/<int:id>', methods=['GET'])
 def get_pokemon(id):
