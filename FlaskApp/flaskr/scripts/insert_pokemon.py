@@ -17,6 +17,7 @@ def insert_pokemon_from_csv(csv_file_path):
                 "INSERT or Ignore INTO Pokemon (PokeID, PokeNum, RegionID, Pname, Image) VALUES (?, ?, ?, ?, ?)",
                 (PokeID, PokeNum, RegionID, Pname, Image)
             )
+            print(f"Inserted: {row}")  # Debugging line
 
     conn.commit()
     conn.close()

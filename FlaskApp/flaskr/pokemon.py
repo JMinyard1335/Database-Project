@@ -33,7 +33,10 @@ def get_all_pokemon():
     """
     cursor.execute(query)
     rows = cursor.fetchall()
+    for row in rows:
+        print(row)
     pokemon_list = [dict(row) for row in rows]
+    print(pokemon_list)
     conn.close()
     return render_template('index.html', pokemon_list=pokemon_list)
 
@@ -127,6 +130,42 @@ def search_pokemon():
     pokemon_list = [dict(row) for row in rows]
     return render_template('index.html', pokemon_list=pokemon_list)
 
+@pokemon_bp.route('/<int:id>/edit', methods=['GET'])
+def edit_pokemon(id):
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM Pokemon WHERE PokeID = ?"
+    cursor.execute(query, (id,))
+    pokemon = cursor.fetchone()
+    conn.close()
+    if pokemon:
+        return render_template('edit.html', pokemon=dict(pokemon))
+    else:
+        return jsonify({'error': 'Pokemon not found'}), 404
+
+@pokemon_bp.route('/<int:id>/update', methods=['POST'])
+def update_pokemon(id):
+    poke_num = request.form.get('poke_num')
+    name = request.form.get('name')
+    region_id = request.form.get('region_id')
+    image = request.form.get('image')
+
+    if not all([poke_num, name, region_id]):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = """
+    UPDATE Pokemon
+    SET PokeNum = ?, Pname = ?, RegionID = ?, Image = ?
+    WHERE PokeID = ?
+    """
+    cursor.execute(query, (poke_num, name, region_id, image, id))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('pokemon.get_all_pokemon'))
+
+
  # ASSIGNMENT 5 STUFF   
 @pokemon_bp.route('/assignment5', methods=['GET', 'POST'])
 def assignment5():
@@ -163,51 +202,6 @@ def search_pokemon_unsafe():
         pokemon = result
 
     return render_template('assignment5.html', pokemon=pokemon, error=error)
-
-@pokemon_bp.route('/<int:id>/edit', methods=['GET'])
-def edit_pokemon(id):
-    conn = db_connection()
-    cursor = conn.cursor()
-    query = "SELECT * FROM Pokemon WHERE PokeID = ?"
-    cursor.execute(query, (id,))
-    pokemon = cursor.fetchone()
-    conn.close()
-    if pokemon:
-        return render_template('edit.html', pokemon=dict(pokemon))
-    else:
-        return jsonify({'error': 'Pokemon not found'}), 404
-
-@pokemon_bp.route('/<int:id>/update', methods=['POST'])
-def update_pokemon(id):
-    poke_num = request.form.get('poke_num')
-    name = request.form.get('name')
-    region_id = request.form.get('region_id')
-    image = request.form.get('image')
-
-    if not all([poke_num, name, region_id]):
-        return jsonify({'error': 'Missing required fields'}), 400
-
-    conn = db_connection()
-    cursor = conn.cursor()
-    query = """
-  SELECT p.PokeNum, p.Pname, r.RegionName,
-GROUP_CONCAT(t.TypeName) AS TypeNames
-FROM 
-    Pokemon p
-JOIN 
-    Region r ON p.RegionID = r.RegionID
-JOIN 
-    PokemonType pt ON p.PokeID = pt.PokeID
-JOIN 
-    Typ t ON pt.TypeID = t.TypeID
-GROUP BY 
-    p.PokeNum, p.Pname, r.RegionName;
-    """
-    cursor.execute(query, (poke_num, name, region_id, image, id))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('pokemon.get_all_pokemon'))
-
 
 # Part B: SQL Injection (UPDATE)
 def update_pokemon_unsafe():
