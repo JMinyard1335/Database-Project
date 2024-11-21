@@ -57,8 +57,12 @@ def get_pokemon(id):
 
 @pokemon_bp.route('/new', methods=['GET'])
 def new_pokemon():
-    return render_template('new.html')
-
+    conn = db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Typ")
+    types = cursor.fetchall()
+    conn.close()
+    return render_template('new.html', types=types)
 
 @pokemon_bp.route('/', methods=['POST'])
 def create_pokemon():
@@ -67,6 +71,7 @@ def create_pokemon():
     name = request.form.get('name')
     region_id = request.form.get('region_id')
     image = request.form.get('image')
+    types = request.form.getlist('types')
 
     if not all([poke_id, poke_num, name, region_id]):
         return jsonify({'error': 'Missing required fields'}), 400
@@ -74,11 +79,19 @@ def create_pokemon():
     conn = db_connection()
     cursor = conn.cursor()
 
-    query = f"""
-    INSERT INTO Pokemon (PokeID, PokeNum, Pname, RegionID, Image)
-    VALUES ({poke_id}, {poke_num}, "{name}", {region_id}, "{image}")
+    query = """
+    INSERT OR IGNORE INTO Pokemon (PokeID, PokeNum, Pname, RegionID, Image)
+    VALUES (?, ?, ?, ?, ?)
     """
-    cursor.execute(query)
+    cursor.execute(query, (poke_id, poke_num, name, region_id, image))
+
+    for type_id in types:
+        type_query = """
+        INSERT INTO PokemonType (PokeID, TypeID)
+        VALUES (?, ?)
+        """
+        cursor.execute(type_query, (poke_id, type_id))
+
     conn.commit()
     conn.close()
     return redirect(url_for('pokemon.get_all_pokemon'))
@@ -249,3 +262,35 @@ def search_pokemon_safe():
         pokemon = result
 
     return render_template('assignment5.html', pokemon=pokemon, error=error)
+
+
+
+
+@pokemon_bp.route('/gyms', methods=['GET'])
+def get_all_gyms():
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT 
+        g.GymName, 
+        r.RegionName, 
+        t.TrainerName AS LeaderName, 
+        GROUP_CONCAT(p.Pname) AS PokemonList
+    FROM 
+        Gyms g
+    JOIN 
+        Region r ON g.RegionID = r.RegionID
+    JOIN 
+        Trainer t ON g.GymID = t.GymID
+    LEFT JOIN 
+        TrainBy tb ON t.TrainerID = tb.TrainerID
+    LEFT JOIN 
+        Pokemon p ON tb.PokeID = p.PokeID
+    GROUP BY 
+        g.GymID, g.GymName, r.RegionName, t.TrainerName;
+    """
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    gym_list = [dict(row) for row in rows]
+    conn.close()
+    return render_template('gyms.html', gym_list=gym_list)

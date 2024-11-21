@@ -1,11 +1,10 @@
 CREATE TABLE IF NOT EXISTS Pokemon
 (
-    PokeID INT,
+    PokeID INT PRIMARY KEY,
     PokeNum INT,
     RegionID INT,
     Pname VARCHAR(100),
     Image VARCHAR(250),
-    PRIMARY KEY (PokeID),
     FOREIGN KEY (RegionID) REFERENCES Region
 );
 

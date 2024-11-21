@@ -14,7 +14,7 @@ def insert_gyms_from_csv(csv_file_path):
         for row in reader:
             GymID, RegionID, GymName, Lvl  = row
             cursor.execute(
-                "INSERT INTO Gyms (GymID, RegionID, GymName, Lvl) VALUES (?, ?, ?, ?)",
+                "INSERT or Ignore INTO Gyms (GymID, RegionID, GymName, Lvl) VALUES (?, ?, ?, ?)",
                 (GymID, RegionID, GymName, Lvl)
             )
 

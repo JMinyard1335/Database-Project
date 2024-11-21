@@ -5,7 +5,7 @@
 {% block content %}
 <h1 class="w-full text-center">All Pokémon</h1>
 <a class="m-4" href="{{ url_for('pokemon.new_pokemon') }}">Add New Pokémon</a>
-
+<a class="m-4" href="{{ url_for('pokemon.get_all_gyms') }}">View All Gyms</a>
 <!-- Search Form -->
 <form method="GET" action="{{ url_for('pokemon.search_pokemon') }}" class="m-4">
   <input type="text" name="pokeNum" placeholder="Enter PokeNum (e.g., 001)" required>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}All Gyms{% endblock %}
+
+{% block content %}
+<h1 class="w-full text-center">All Gyms</h1>
+
+<div class="m-4">
+  <table>
+    <thead class="bg-red color-white">
+      <tr>
+        <th>Gym Name</th>
+        <th>Region</th>
+        <th>Leader Name</th>
+        <th>Pokémon</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for gym in gym_list %}
+      <tr>
+        <td>{{ gym['GymName'] }}</td>
+        <td>{{ gym['RegionName'] }}</td>
+        <td>{{ gym['LeaderName'] }}</td>
+        <td>{{ gym['PokemonList'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
