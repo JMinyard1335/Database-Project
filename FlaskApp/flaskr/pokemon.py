@@ -16,16 +16,27 @@ def get_all_pokemon():
     conn = db_connection()
     cursor = conn.cursor()
     query = """
-    SELECT Pokemon.PokeID, Pokemon.PokeNum, Pokemon.Pname, Region.RegionName, Pokemon.Image
-    FROM Pokemon
-    JOIN Region ON Pokemon.RegionID = Region.RegionID
+    SELECT 
+        p.PokeID, p.PokeNum, p.Pname, 
+        r.RegionName, p.Image, 
+        GROUP_CONCAT(t.TypeName) AS TypeNames
+    FROM 
+        Pokemon p
+    JOIN 
+        Region r ON p.RegionID = r.RegionID
+    JOIN 
+        PokemonType pt ON p.PokeID = pt.PokeID
+    JOIN 
+        Typ t ON pt.TypeID = t.TypeID
+    GROUP BY 
+        p.PokeID, p.PokeNum, p.Pname, r.RegionName;
     """
     cursor.execute(query)
     rows = cursor.fetchall()
     pokemon_list = [dict(row) for row in rows]
-    print(pokemon_list)
     conn.close()
     return render_template('index.html', pokemon_list=pokemon_list)
+
 
 @pokemon_bp.route('/<int:id>', methods=['GET'])
 def get_pokemon(id):
@@ -80,21 +91,57 @@ def delete_pokemon(id):
     conn.close()
     return redirect(url_for('pokemon.get_all_pokemon'))
 
+@pokemon_bp.route('/search', methods=['GET'])
+def search_pokemon():
+    poke_num = request.args.get('pokeNum')
+    if not poke_num:
+        return redirect(url_for('pokemon.get_all_pokemon'))
 
+    conn = db_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT 
+        p.PokeID, p.PokeNum, p.Pname, 
+        r.RegionName, p.Image, 
+        GROUP_CONCAT(t.TypeName) AS TypeNames
+    FROM 
+        Pokemon p
+    JOIN 
+        Region r ON p.RegionID = r.RegionID
+    JOIN 
+        PokemonType pt ON p.PokeID = pt.PokeID
+    JOIN 
+        Typ t ON pt.TypeID = t.TypeID
+    WHERE 
+        p.PokeNum = ?
+    GROUP BY 
+        p.PokeID, p.PokeNum, p.Pname, r.RegionName;
+    """
+    cursor.execute(query, (poke_num,))
+    rows = cursor.fetchall()
+    conn.close()
+
+    if not rows:
+        return render_template('index.html', error="No Pokémon found with that PokeNum", pokemon_list=[])
+
+    pokemon_list = [dict(row) for row in rows]
+    return render_template('index.html', pokemon_list=pokemon_list)
+
+ # ASSIGNMENT 5 STUFF   
 @pokemon_bp.route('/assignment5', methods=['GET', 'POST'])
 def assignment5():
     if request.method == 'POST':
         if 'search_submit' in request.form:
-            return search_pokemon()
+            return search_pokemon_unsafe()
         elif 'update_submit' in request.form:
-            return update_pokemon()
+            return update_pokemon_unsafe()
         elif 'search_safe_submit' in request.form:
             return search_pokemon_safe()
     
     return render_template('assignment5.html')
 
 # Part A: SQL Injection (SELECT)
-def search_pokemon():
+def search_pokemon_unsafe():
     pokemon = None
     error = None
 
@@ -143,9 +190,18 @@ def update_pokemon(id):
     conn = db_connection()
     cursor = conn.cursor()
     query = """
-    UPDATE Pokemon
-    SET PokeNum = ?, Pname = ?, RegionID = ?, Image = ?
-    WHERE PokeID = ?
+  SELECT p.PokeNum, p.Pname, r.RegionName,
+GROUP_CONCAT(t.TypeName) AS TypeNames
+FROM 
+    Pokemon p
+JOIN 
+    Region r ON p.RegionID = r.RegionID
+JOIN 
+    PokemonType pt ON p.PokeID = pt.PokeID
+JOIN 
+    Typ t ON pt.TypeID = t.TypeID
+GROUP BY 
+    p.PokeNum, p.Pname, r.RegionName;
     """
     cursor.execute(query, (poke_num, name, region_id, image, id))
     conn.commit()

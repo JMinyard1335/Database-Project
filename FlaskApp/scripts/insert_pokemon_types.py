@@ -5,21 +5,21 @@ def db_connection():
     conn = sqlite3.connect('instance/pokedex.sqlite')
     return conn
 
-def insert_types_from_csv(csv_file_path):
+def insert_pokemon_types_from_csv(csv_file_path):
     conn = db_connection()
     cursor = conn.cursor()
 
     with open(csv_file_path, newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            TypeID, TypeName = row
+            PokeID, TypeID = row
             cursor.execute(
-                "INSERT or Ignore INTO Typ (TypeID, TypeName) VALUES (?, ?)",
-                (TypeID, TypeName)
+                "INSERT or Ignore INTO PokemonType (PokeID, TypeID) VALUES (?, ?)",
+                (PokeID, TypeID)
             )
 
     conn.commit()
     conn.close()
 
 if __name__ == '__main__':
-    insert_types_from_csv('csvdata/types.csv')
+    insert_pokemon_types_from_csv('csvdata/pokemontypes.csv')

@@ -14,7 +14,7 @@ def insert_region_from_csv(csv_file_path):
         for row in reader:
             RegionID, RegionName = row
             cursor.execute(
-                "INSERT INTO Region (RegionID, RegionName) VALUES (?, ?)",
+                "INSERT or Ignore INTO Region (RegionID, RegionName) VALUES (?, ?)",
                 (RegionID, RegionName)
             )
 
